@@ -3,12 +3,28 @@
 require 'sinatra'
 require 'json'
 
+def n_samples(size)
+  (0..size).reduce({}) do |map, i|
+    map.merge("key#{i}" => i)
+  end.to_json
+end
+
 get '/small' do
   content_type :json
 
-  val = (0..rand(20)).reduce({}) do |map, i|
-    map.merge("key#{i}" => i)
-  end
+  n_samples(20)
+end
 
-  val.to_json
+
+get '/large' do
+  content_type :json
+
+  n_samples(2000)
+end
+
+
+get '/random' do
+  content_type :json
+
+  n_samples(rand(2000))
 end
